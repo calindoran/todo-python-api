@@ -1,0 +1,29 @@
+# .gitignore
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*~
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# SQLite
+*.sqlite
+*.sqlite3
+*.sql
+
+# Pytest
+.pytest_cache/
+
+# Redis
+dump.rdb
