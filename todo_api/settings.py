@@ -1,4 +1,3 @@
-# Import dj-database-url at the beginning of the file.
 import os
 import dj_database_url
 from pathlib import Path
@@ -18,7 +17,6 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
@@ -29,7 +27,6 @@ SECRET_KEY = 'django-insecure-v4j*7r*sz5gx^udwtr$+&x_p$avdb0!2e!jkf39qs=f$=*si(3
 DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
 ALLOWED_HOSTS = ['*']
-
 
 # Application definition
 
@@ -77,7 +74,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'todo_api.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
@@ -93,7 +89,6 @@ else:
     DATABASES = {
         'default': dj_database_url.config(default='postgresql://postgres:postgres@localhost:5432/todo_api', conn_max_age=600)
     }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -113,7 +108,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
@@ -125,15 +119,14 @@ USE_I18N = True
 
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.0/howto/static-files/
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 # This setting informs Django of the URI path from which your static files will be served to users
 # Here, they well be accessible at your-domain.onrender.com/static/... or yourcustomdomain.com/static/...
+
 STATIC_URL = '/static/'
+
 # This production code might break development mode, so we check whether we're in DEBUG mode
 # Tell Django to copy static assets into a path called `staticfiles` (this is specific to Render)
 if not DEBUG:
