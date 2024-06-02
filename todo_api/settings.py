@@ -1,6 +1,7 @@
 # Import dj-database-url at the beginning of the file.
 import os
 import dj_database_url
+from pathlib import Path
 
 """
 Django settings for todo_api project.
@@ -14,10 +15,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
-from pathlib import Path
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # Quick-start development settings - unsuitable for production
@@ -27,7 +26,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'django-insecure-v4j*7r*sz5gx^udwtr$+&x_p$avdb0!2e!jkf39qs=f$=*si(3'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG', True)
+DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
 ALLOWED_HOSTS = ['*']
 
@@ -82,17 +81,18 @@ WSGI_APPLICATION = 'todo_api.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
-# Replace the SQLite DATABASES configuration with PostgreSQL for Render
-DATABASES = {
-    'default': dj_database_url.config(default='postgresql://postgres:postgres@localhost:5432/todo_api', conn_max_age=600)
-}
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+else:
+    # Replace the SQLite DATABASES configuration with PostgreSQL for Render
+    DATABASES = {
+        'default': dj_database_url.config(default='postgresql://postgres:postgres@localhost:5432/todo_api', conn_max_age=600)
+    }
 
 
 # Password validation
@@ -136,11 +136,11 @@ USE_TZ = True
 STATIC_URL = '/static/'
 # This production code might break development mode, so we check whether we're in DEBUG mode
 # Tell Django to copy static assets into a path called `staticfiles` (this is specific to Render)
-# if not DEBUG:
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-# Enable the WhiteNoise storage backend, which compresses static files to reduce disk use
-# and renames the files with unique names for each version to support long-term caching
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+if not DEBUG:
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    # Enable the WhiteNoise storage backend, which compresses static files to reduce disk use
+    # and renames the files with unique names for each version to support long-term caching
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
