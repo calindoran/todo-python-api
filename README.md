@@ -19,6 +19,12 @@ python manage.py makemigrations
 python manage.py migrate
 ```
 
+Create superuser
+
+```console
+python manage.py createsuperuser
+```
+
 To jump out of our venv and back to our host machine.
 
 ```console
