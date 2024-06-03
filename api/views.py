@@ -1,6 +1,6 @@
 
-from django.contrib.auth import logout
 from django.contrib.auth.models import Group, User
+from django.contrib.auth.views import LogoutView as logout
 from django.shortcuts import redirect
 from rest_framework import permissions, status, viewsets
 from rest_framework.response import Response
