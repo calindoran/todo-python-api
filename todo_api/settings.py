@@ -23,12 +23,23 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-v4j*7r*sz5gx^udwtr$+&x_p$avdb0!2e!jkf39qs=f$=*si(3'
+SECRET_KEY = os.getenv(
+    'SECRET_KEY', 'django-insecure-v4j*7r*sz5gx^udwtr$+&x_p$avdb0!2e!jkf39qs=f$=*si(3')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
 ALLOWED_HOSTS = ['*']
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost',
+    'http://127.0.0.1',
+    'http://0.0.0.0',
+]
+
+CORS_ALLOW_CREDENTIALS = True
+
+AUTH_USER_MODEL = 'api.AppUser'
 
 # Application definition
 
@@ -41,28 +52,27 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'drf_yasg',
+    'corsheaders',
     'api',
 ]
 
-SWAGGER_SETTINGS = {
-    'USE_SESSION_AUTH': False,
-    'LOGIN_URL': 'rest_framework:login',
-    'LOGOUT_URL': 'rest_framework:logout'
-}
+# SWAGGER_SETTINGS = {
+#     'USE_SESSION_AUTH': True,
+# }
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.BasicAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-    ),
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
     ),
 }
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',

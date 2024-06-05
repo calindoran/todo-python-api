@@ -1,17 +1,17 @@
-from django.urls import include, path
-from rest_framework import routers
+from django.urls import path
 
 from . import views
 
-router = routers.DefaultRouter()
-router.register(r'blogposts', views.BlogPostListCreate,
-                basename='blogpost-list-create')
-router.register(r'groups', views.GroupViewSet)
-router.register(r'users', views.UserViewSet)
-
-
 urlpatterns = [
-    path('', include(router.urls)),
-    path('api-auth/logout/', views.LogoutView.as_view(), name='logout'),
-    path('api-auth/', include('rest_framework.urls', namespace="rest_framework")),
+    path("blogposts/", views.BlogPostListCreate.as_view(),
+         name="blogpost-view-create"),
+    path(
+        "blogposts/<int:pk>/",
+        views.BlogPostRetrieveUpdateDestory.as_view(),
+        name="blogpost-update",
+    ),
+    path('register/', views.UserRegister.as_view(), name='register'),
+    path('login/', views.UserLogin.as_view(), name='login'),
+    path('logout/', views.UserLogout.as_view(), name='logout'),
+    path('user/', views.UserView.as_view(), name='user'),
 ]

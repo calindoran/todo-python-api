@@ -19,6 +19,12 @@ python manage.py makemigrations
 python manage.py migrate
 ```
 
+Run the server
+
+```console
+python manage.py runserver
+```
+
 Create superuser
 
 ```console
