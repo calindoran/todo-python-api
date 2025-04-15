@@ -8,7 +8,8 @@ Running this project in a python venv and use pip to install our deps.
 
 ```console
 python -m venv venv
-.\venv\Scripts\activate
+.\venv\Scripts\activate // for windows
+source venv/bin/activate // for mac
 pip install -r requirements.txt
 ```
 
